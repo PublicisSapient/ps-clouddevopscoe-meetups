@@ -13,6 +13,7 @@ PS Cloud & DevOps CoE Capability Team
 # Point of contacts
 - Mohammad Wasim
 - Amit Patil
+- Rudraksh Khandelwal
 - Manish Warang
 - Rethesh Nair
 - Sandeep Sharma
