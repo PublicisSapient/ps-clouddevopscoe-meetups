@@ -1,5 +1,5 @@
 # About
-As part of **PS Cloud & DevOps CoE** capability **ThoughtLeadership** initiative, we conduct external meetups to share our point of view/opinoins on different emerging tools, techonologies, practices, trends etc. These discussions include content like deck, gist of commands, demo code, yamls etc. used by presenter, also referenced by audience to try things out at their end. So, to share this referenceable content with external audience, this repository serves the purpose. 
+As part of **PS Cloud & DevOps CoE** capability **ThoughtLeadership** initiative, we conduct external meetups to share our point of view/opinoins on different emerging tools, techonologies, practices, trends etc. These discussions include content like deck, gist of commands, demo code, yamls etc. used by presenter, also referenced by audience to try things out at their end. So, to share the referenceable content with external audience, this repository serves the purpose. 
 
 # Guidelines
 Below guidelines should be followed to host the referenceable content.
