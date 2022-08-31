@@ -5,6 +5,7 @@ As part of **PS Cloud & DevOps CoE** capability **ThoughtLeadership** initiative
 Below guidelines should be followed to host the referenceable content.
 1. Should not include PII/senstive details.
 2. Should not include any confidential/internal details of PS.
+3. Should be hosted here post reviewed by below POC's.
 
 # Owner
 PS Cloud & DevOps CoE Capability Team
