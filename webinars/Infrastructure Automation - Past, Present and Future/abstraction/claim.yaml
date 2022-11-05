@@ -3,7 +3,7 @@ apiVersion: psengineering.io/v1alpha1
 kind: K8sClaim
 metadata:
  ## prepend eks, gke, aks to differentiate claims
- name: aks-cluster
+ name: kubernetes-cluster
  labels:
    cluster-owner: "ps-cloud-devops-coe" 
 spec:

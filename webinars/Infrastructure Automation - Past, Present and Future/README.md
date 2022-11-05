@@ -1,12 +1,13 @@
 # Try things out
 
 ## Pre-requisites
-1. Kubernetes cluster should be provisioned locally via **Rancher Desktop**, **Minikube**, **Docker Desktop** and kubectl installed and configured to connect with cluster.
-2. Cloud provider credentials should be available, to create follow below links.
+1. Kubernetes cluster should be provisioned locally via **Rancher Desktop**, **Minikube**, **Docker Desktop**.
+2. kubectl installed and configured to connect with cluster.
+2. Cloud provider credentials should be created, to create follow below links.
     - [Microsoft Azure](https://crossplane.io/docs/v1.10/cloud-providers/azure/azure-provider.html)
     - [Amazon Web Services](https://crossplane.io/docs/v1.10/cloud-providers/aws/aws-provider.html)
     - [Google Cloud Platform](https://crossplane.io/docs/v1.10/cloud-providers/gcp/gcp-provider.html)
-3. Helm should be installed
+3. Helm should be installed.
 
 ## Crossplane setup<a name="x-setup"></a>
 ```
@@ -15,19 +16,21 @@ helm repo add crossplane-stable https://charts.crossplane.io/stable
 helm repo update
 helm install crossplane --namespace crossplane-system crossplane-stable/crossplane
 ```
+**_Reference_**: [Crossplane documentation](https://crossplane.io/docs)
 
 ## Demo 1 - providers setup
 ### Description
-Setup cloud providers - aws, gcp, azure.
+Setup different cloud providers - aws, gcp, azure.
 
 ### Instructions
 - Goto, [providers](https://github.com/PublicisSapient/ps-clouddevopscoe-meetups/blob/main/webinars/Infrastructure%20Automation%20-%20Past%2C%20Present%20and%20Future/providers) folder.
-- Generate base64 encoded value of aws, gcp and azure credentials and mention it in credentials.yaml file available in **aws**, **gcp** & **azure** folders.
+- Generate base64 encoded value of aws, gcp and azure credentials.
+- Specify encoded values in **credentials.yaml** file available in **aws**, **gcp** & **azure** folders, refer example.
 ```
 data:
   credentials: "base64 encoded value of credentials"
 ```
-- Specify **project id** of your Google Cloud in **gcp/providerconfig.yaml** file, for example.
+- Specify **project id** of your Google Cloud in **providers/gcp/providerconfig.yaml** file, for example.
 ```
 spec:
   projectID: "your google cloud project id"
@@ -36,7 +39,7 @@ spec:
     - credentials.yaml
     - provider.yaml
     - providerconfig.yaml
-- **providerconfig.yaml** must be applied after **provider.yaml**, with cooldown period of 10 - 20 sec, to let provider setup complete.
+- **_Note_** **providerconfig.yaml** must be applied after **provider.yaml**, with cooldown period of 10 - 20 sec, to let provider setup complete.
 - To validate, run below command.
 ```
 kubeclt get deployment -n crossplane-system
@@ -61,21 +64,21 @@ To demonstrate crossplane drift detection and desired state reconciliation.
 ```
 kubectl apply -f aws-firewall.yaml
 ```
-- It will create one **security group** named as **x-drift-demo-sg** in **North Virginia** region.
+- It will create one **security group** named as **x-drift-demo-sg** in **North Virginia** region in aws.
 - To validate drift detection and reconciliation, follow below
-    - Login to AWS cloud web console
-    - Look for security group created
+    - Login to AWS cloud web console.
+    - Look for created security group.
     - Try to add/update/remove ingress or egress rules, wait for sometime, check if your changes are reverted to desired state of firewall rules as per **aws-firewall.yaml** file.
 
 ## Demo 3 - chicken-egg
 ### Description
-- Since crossplane runs on kubernetes, so to provision and manage kubernetes clusters via crossplane from where we should to get started.
+- Since crossplane runs on kubernetes, to provision and manage kubernetes clusters via crossplane, from where one should get started.
 - To demonstrate, first create k8s cluster on your local system via Rancher Desktop, Minikube, Docker Desktop.
 - Setup Crossplane on your local k8s cluster.
 - Provision GKE cluster via Crossplane.
 - Configure and use GKE cluster to manage its own and running application workloads.
 
-**_NOTE_**: Reset the locally running k8s cluster.
+**_NOTE_**: Reset the locally running k8s cluster, when GKE cluster is setup with crossplane and gke.yaml deployed.
 
 ### Instructions
 - Goto, [chicken-egg](https://github.com/PublicisSapient/ps-clouddevopscoe-meetups/blob/feature-crossplane-demo/webinars/Infrastructure%20Automation%20-%20Past%2C%20Present%20and%20Future/chicken-egg) folder.
@@ -88,11 +91,13 @@ gcloud container clusters get-credentials \
 - After kubectl connect with gke cluster, apply below manifests, resources are created in x-chicken-egg-ns namespace.
     - app.yaml - create namespace and deploy an nginx image
     - svc.yaml - create load balancer
-- Access latest deployed nginx, to get load balancer public ip, run below command.
+- Access latest deployed nginx, to get load balancer EXTERNAL-IP, run below command.
 ```
 kubectl get svc x-chicken-egg-svc -n x-chicken-egg-ns
+NAME                TYPE           CLUSTER-IP    EXTERNAL-IP   PORT(S)        AGE
+x-chicken-egg-svc   LoadBalancer   XX.XX.XX.XX   XX.XX.XX.XX   80:31220/TCP   14s
 ```
-- Hit load balancer public ip endpoint, should be able to get default nginx web page.
+- Hit load balancer EXTERNAL-IP, should be able to get default nginx web page.
 - Now [setup Crossplane](#x-setup) on gke cluster.
 - After Crossplane setup, apply manifest **gke.yaml**.
 - Your gke cluster should be running in AS-IS state.
@@ -101,7 +106,7 @@ kubectl get svc x-chicken-egg-svc -n x-chicken-egg-ns
 - Your gke cluster should be running in AS-IS state.
 - Try to access nginx web page again, should be working.
 - Change **replicas** count in **app.yaml** file and apply, check if replica count is changing and able to access nginx web page.
-- Change **maxNodeCount** in **gke.yaml**, from 10 to 5, apply manifest, check gke web console if nodepool autoscaling max node numbers changed from 10 to 5.
+- Change **maxNodeCount** in **gke.yaml**, from 10 to 5, apply manifest, check gke web console if nodepool autoscaling max node count changed from 10 to 5.
 
 ## Demo 4 - Abstraction - shift left approach
 ### Description
@@ -125,9 +130,10 @@ compositionSelector:
     ## valid values - eks, gke, aks
     cluster: aks
 ```
-- change provider to azure and cluster to aks, apply claim.yaml
-- change provider to aws and cluster to eks, apply claim.yaml
-- change provider to google and cluster to gke, apply claim.yaml
+ - change **provider** to **aws** and **cluster** to **eks**, apply claim.yaml
+ - change **provider** to **gcp** and **cluster** to **gke**, apply claim.yaml
+ - change **provider** to **azure** and **cluster** to **aks**, apply claim.yaml
+ - to apply claim.yaml, run command
 ```
 kubectl apply -f claim.yaml
 ```
