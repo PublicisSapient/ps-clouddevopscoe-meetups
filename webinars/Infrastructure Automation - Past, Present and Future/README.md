@@ -150,5 +150,5 @@ kubectl apply -f claim.yaml
     kubectl get aksclusters.compute.azure.crossplane.io
     # response
     NAME                         READY   SYNCED   ENDPOINT                                      LOCATION   AGE
-x-abstraction-demo-cluster   True    True     psengineering-fdfb7e73.hcp.eastus.azmk8s.io   eastus     121m
+    x-abstraction-demo-cluster   True    True     psengineering-fdfb7e73.hcp.eastus.azmk8s.io   eastus     121m
     ```
