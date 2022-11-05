@@ -16,13 +16,17 @@ helm repo update
 helm install crossplane --namespace crossplane-system crossplane-stable/crossplane
 ```
 ## Demo 1 - providers setup
+### Description
+Setup cloud providers - aws, gcp, azure.
+
+### Instructions
 - Goto, [providers](https://github.com/PublicisSapient/ps-clouddevopscoe-meetups/blob/main/webinars/Infrastructure%20Automation%20-%20Past%2C%20Present%20and%20Future/providers) folder.
-- Generate base64 encoded value of aws, gcp and azure credentials and mention in credentials.yaml files available in **aws**, **gcp** & **azure** folders, for example.
+- Generate base64 encoded value of aws, gcp and azure credentials and mention it in credentials.yaml files - see below example, which is available in **aws**, **gcp** & **azure** folders.
 ```
 data:
   credentials: "base64 encoded value of credentials"
 ```
-- Specify **project id** of Google Cloud in **gcp/providerconfig.yaml** file, for example.
+- Specify **project id** of your Google Cloud in **gcp/providerconfig.yaml** file, for example.
 ```
 spec:
   projectID: "your google cloud project id"
@@ -89,6 +93,9 @@ kubectl get svc x-chicken-egg-svc -n x-chicken-egg-ns
 - Try to access nginx web page again, should be working.
 - Change replica count in app.yaml file and apply, check if replica count is changing and able to access nginx web page.
 - Change **maxNodeCount** in gke.yaml, from 10 to 5, apply manifest, check gke web console if that is changed in nodepool autoscaling configs.
+
+
+**_NOTE:_** fewfewfewfwefwwfwefewfwefwefwefwefewfwefwefwefwefwefwefwefewfwefwefwefwefe
 
 
 
