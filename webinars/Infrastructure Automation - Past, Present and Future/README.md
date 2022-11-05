@@ -144,9 +144,11 @@ kubectl apply -f claim.yaml
     kubectl get clusters.container.gcp.crossplane.io
     # response
     NAME                         READY   SYNCED   STATE     ENDPOINT        LOCATION   AGE
-x-abstraction-demo-cluster   True    True     RUNNING   XX.XX.XX.XX     us-east1   121m
+    x-abstraction-demo-cluster   True    True     RUNNING   XX.XX.XX.XX     us-east1   121m
 
     # for azure
     kubectl get aksclusters.compute.azure.crossplane.io
     # response
+    NAME                         READY   SYNCED   ENDPOINT                                      LOCATION   AGE
+x-abstraction-demo-cluster   True    True     psengineering-fdfb7e73.hcp.eastus.azmk8s.io   eastus     121m
     ```
