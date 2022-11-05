@@ -107,7 +107,7 @@ x-chicken-egg-svc   LoadBalancer   XX.XX.XX.XX   XX.XX.XX.XX   80:31220/TCP   14
 - Change **replicas** count in **app.yaml** file and apply, check if replica count is changing and able to access nginx web page.
 - Change **maxNodeCount** in **gke.yaml**, from 10 to 5, apply manifest, check gke web console if nodepool autoscaling max node count changed from 10 to 5.
 
-## Demo 4 - Abstraction - shift left approach
+## Demo 4 - abstraction - shift-left approach
 ### Description
 By leveraging crossplane **composition**, **composite resource definition**, **composite resource** capabilities , used to construct opinionated abstractions to implement the shift-left approch to provision & manage infrastructure.
 
