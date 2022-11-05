@@ -85,8 +85,7 @@ kubectl apply -f aws-firewall.yaml
 - Apply manifest **gke.yaml**, to create gke cluster in **us-east1** region.
 - Configure kubectl to connect with gke cluster, run below command, to get kubeconfig settings.
 ```
-gcloud container clusters get-credentials \
-   x-chicken-egg-demo --region us-east1
+gcloud container clusters get-credentials x-chicken-egg-demo --region us-east1
 ```
 - After kubectl connect with gke cluster, apply below manifests, resources are created in x-chicken-egg-ns namespace.
     - app.yaml - create namespace and deploy an nginx image
