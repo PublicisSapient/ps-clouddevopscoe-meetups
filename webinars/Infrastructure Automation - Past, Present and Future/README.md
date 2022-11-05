@@ -43,11 +43,12 @@ kubeclt get deployment -n crossplane-system
 ```
 - Should get below response.
 ```
-deployment.apps/crossplane-rbac-manager     1/1     1            1           3m3s
-deployment.apps/crossplane                  1/1     1            1           3m3s
-deployment.apps/provider-aws-XXXXXX         1/1     1            1           3m3s
-deployment.apps/provider-gcp-XXXXXX         1/1     1            1           3m3s
-deployment.apps/provider-azure-XXXXXX       1/1     1            1           3m3s
+NAME                                          READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/crossplane-rbac-manager       1/1     1            1           7m48s
+deployment.apps/crossplane                    1/1     1            1           7m48s
+deployment.apps/provider-aws-XXXXXX           1/1     1            1           4m56s
+deployment.apps/provider-gcp-XXXXXX           1/1     1            1           2m13s
+deployment.apps/provider-azure-XXXXXX         1/1     1            1           16s
 ```
 
 ## Demo 2 - drift detection & reconciliation
@@ -104,7 +105,7 @@ kubectl get svc x-chicken-egg-svc -n x-chicken-egg-ns
 
 ## Demo 4 - Abstraction - shift left approach
 ### Description
-By leveraging crossplane **composition**, **composite resource definition**, **composite resource** capabilities can be used to construct opinionated abstraction to implement the shift-left approch to provision & manage infrastructure.
+By leveraging crossplane **composition**, **composite resource definition**, **composite resource** capabilities , used to construct opinionated abstractions to implement the shift-left approch to provision & manage infrastructure.
 
 ### Instruction
 - Goto, [abstraction](https://github.com/PublicisSapient/ps-clouddevopscoe-meetups/blob/feature-crossplane-demo/webinars/Infrastructure%20Automation%20-%20Past%2C%20Present%20and%20Future/abstraction) folder.
@@ -131,8 +132,8 @@ compositionSelector:
 kubectl apply -f claim.yaml
 ```
 - kubernetes clusters are provisioned in aws, gcp and azure cloud by name **x-abstraction-demo-cluster**
-- To validate
-    - Goto, cloud web console and look for cluster in us east region or by running kubectl commands
+- To validate, created kubernetes clusters
+    - goto, cloud provider web console and look for cluster in **us east** region or by running kubectl commands
     ```
     # for aws
     kubectl get clusters.eks.aws.crossplane.io
