@@ -8,7 +8,7 @@
     - [Google Cloud Platform](https://crossplane.io/docs/v1.10/cloud-providers/gcp/gcp-provider.html)
 3. Helm should be installed
 
-## Crossplane setup<a>x-setup</a>
+## Crossplane setup<a name="x-setup"></a>
 ```
 kubectl create namespace crossplane-system
 helm repo add crossplane-stable https://charts.crossplane.io/stable
