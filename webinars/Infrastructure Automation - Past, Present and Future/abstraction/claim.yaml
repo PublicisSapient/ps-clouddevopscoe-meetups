@@ -1,0 +1,20 @@
+---
+apiVersion: psengineering.io/v1alpha1
+kind: K8sClaim
+metadata:
+ ## prepend eks, gke, aks to differentiate claims
+ name: kubernetes-cluster
+ labels:
+   cluster-owner: "ps-cloud-devops-coe" 
+spec:
+  id: x-abstraction-demo-cluster
+  compositionSelector:
+    matchLabels:
+      ## valid values - aws, azure, google
+      provider: azure
+      ## valid values - eks, gke, aks
+      cluster: aks
+  parameters:
+    ## valid values - small, medium, large
+    nodeSize: small
+    minNodeCount: 1

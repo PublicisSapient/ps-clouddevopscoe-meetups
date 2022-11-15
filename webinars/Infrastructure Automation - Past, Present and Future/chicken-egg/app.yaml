@@ -1,0 +1,27 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: x-chicken-egg-ns
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: x-chicken-egg-demo-app
+  namespace: x-chicken-egg-ns
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: x-chicken-egg-demo-app
+  template:
+    metadata:
+      labels:
+        app: x-chicken-egg-demo-app
+    spec:
+      containers:
+      - name: x-chicken-egg-demo-app
+        image: nginx
+        ports:
+        - containerPort: 80

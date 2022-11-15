@@ -1,0 +1,77 @@
+---
+apiVersion: apiextensions.crossplane.io/v1
+kind: Composition
+metadata:
+  name: cluster-azure
+  labels:
+    provider: azure
+    cluster: aks
+spec:
+  compositeTypeRef:
+    apiVersion: psengineering.io/v1alpha1
+    kind: K8sCluster
+  writeConnectionSecretsToNamespace: crossplane-system
+  patchSets:
+  - name: metadata
+    patches:
+    - fromFieldPath: metadata.labels
+  resources:
+  - name: resourcegroup
+    base:
+      apiVersion: azure.crossplane.io/v1alpha3
+      kind: ResourceGroup
+      spec:
+        location: eastus
+    patches:
+    - fromFieldPath: spec.id
+      toFieldPath: metadata.name
+    - type: ToCompositeFieldPath
+      fromFieldPath: metadata.name
+      toFieldPath: metadata.labels.resourcegroup
+  - name: aks
+    base:
+      apiVersion: compute.azure.crossplane.io/v1alpha3
+      kind: AKSCluster
+      spec:
+        location: eastus
+        dnsNamePrefix: psengineering
+        version: "1.24.6"
+        nodeCount: 1
+        nodeVMSize: Standard_DS2_v2
+    patches:
+    - fromFieldPath: spec.id
+      toFieldPath: metadata.name
+    - fromFieldPath: spec.id
+      toFieldPath: spec.resourceGroupName
+    - fromFieldPath: spec.parameters.version
+      toFieldPath: spec.version
+    - fromFieldPath: spec.parameters.minNodeCount
+      toFieldPath: spec.nodeCount
+    - fromFieldPath: spec.parameters.nodeSize
+      toFieldPath: spec.nodeVMSize
+      transforms:
+      - type: map
+        map:
+          small: Standard_DS2_v2
+          medium: Standard_DS3_v2
+          large: Standard_D4s_v3
+    - fromFieldPath: metadata.uid
+      toFieldPath: spec.writeConnectionSecretToRef.name
+      transforms:
+      - type: string
+        string:
+          fmt: "%s-akscluster"
+    - type: ToCompositeFieldPath
+      fromFieldPath: status.state
+      toFieldPath: status.controlPlaneStatus
+    - type: ToCompositeFieldPath
+      fromFieldPath: status.state
+      toFieldPath: status.nodePoolStatus
+    - fromFieldPath: spec.writeConnectionSecretToRef.namespace
+      toFieldPath: spec.writeConnectionSecretToRef.namespace
+    readinessChecks:
+    - type: MatchString
+      fieldPath: "status.state"
+      matchString: "Succeeded"
+    connectionDetails:
+    - fromConnectionSecretKey: kubeconfig

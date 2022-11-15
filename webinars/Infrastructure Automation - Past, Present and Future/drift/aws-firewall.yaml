@@ -1,0 +1,22 @@
+---
+apiVersion: ec2.aws.crossplane.io/v1beta1
+kind: SecurityGroup
+metadata:
+  name: x-drift-demo-sg
+spec:
+  forProvider:
+    region: us-east-1
+    groupName: x-drift-demo-sg
+    description: "crossplane drift demo"
+    ingress:
+      - fromPort: 80
+        toPort: 80
+        ipProtocol: tcp
+        ipRanges:
+          - cidrIp: "1.1.1.1/32"
+    egress:
+      - fromPort: 0
+        toPort: 0
+        ipProtocol: "-1"
+        ipRanges:
+          - cidrIp: "0.0.0.0/0"
